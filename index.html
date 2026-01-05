@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>College Attendance</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div class="container">
+    <h2 id="title">College Attendance</h2>
+
+    <!-- REGISTRATION -->
+    <div id="registerBox" class="card hidden">
+      <input id="name" placeholder="Full Name">
+      <input id="roll" placeholder="Roll No / College ID">
+      <select id="dept">
+        <option value="">Select Department</option>
+        <option value="SCM">SCM</option>
+        <option value="EXIM">EXIM</option>
+      </select>
+      <button onclick="registerStudent()">Register</button>
+      <p class="error" id="regError"></p>
+    </div>
+
+    <!-- ATTENDANCE -->
+    <div id="attendanceBox" class="card hidden">
+      <p class="info">Click below to mark your attendance</p>
+      <button onclick="markAttendance()">Mark Attendance</button>
+      <p class="success" id="attSuccess"></p>
+      <p class="error" id="attError"></p>
+    </div>
+
+  </div>
+
+  <!-- JS -->
+  <script src="js/app.js"></script>
+</body>
+</html>
