@@ -1,6 +1,6 @@
-console.log("App JS loaded");
+console.log("Student app loaded");
 
-const BACKEND_URL = "    https://attendance-backend-5f7f.onrender.com"; // CHANGE IF NEEDED
+const BACKEND_URL = "https://attendance-backend-5f7f.onrender.com"; // your backend
 
 const registerBox = document.getElementById("registerBox");
 const attendanceBox = document.getElementById("attendanceBox");
@@ -10,18 +10,32 @@ const regError = document.getElementById("regError");
 const attError = document.getElementById("attError");
 const attSuccess = document.getElementById("attSuccess");
 
+const studentNameEl = document.getElementById("studentName");
+const studentDeptEl = document.getElementById("studentDept");
+
 let qrScanner = null;
 
-// ---------- INITIAL STATE ----------
+// ---------------- INITIAL LOAD ----------------
 const studentId = localStorage.getItem("student_id");
+const studentName = localStorage.getItem("student_name");
+const studentDept = localStorage.getItem("student_dept");
 
 if (!studentId) {
   registerBox.classList.remove("hidden");
 } else {
-  attendanceBox.classList.remove("hidden");
+  showAttendanceBox();
 }
 
-// ---------- REGISTER ----------
+// ---------------- SHOW ATTENDANCE UI ----------------
+function showAttendanceBox() {
+  attendanceBox.classList.remove("hidden");
+  registerBox.classList.add("hidden");
+
+  studentNameEl.innerText = studentName;
+  studentDeptEl.innerText = `Department: ${studentDept}`;
+}
+
+// ---------------- REGISTER ----------------
 function registerStudent() {
   regError.innerText = "";
 
@@ -47,6 +61,8 @@ function registerStudent() {
   .then(data => {
     if (data.student_id) {
       localStorage.setItem("student_id", data.student_id);
+      localStorage.setItem("student_name", name);
+      localStorage.setItem("student_dept", dept);
       location.reload();
     } else {
       regError.innerText = data.error || "Registration failed";
@@ -57,7 +73,7 @@ function registerStudent() {
   });
 }
 
-// ---------- QR SCANNER ----------
+// ---------------- QR SCANNER ----------------
 function startScanner() {
   attError.innerText = "";
   attSuccess.innerText = "";
@@ -86,7 +102,7 @@ function stopScanner() {
   attendanceBox.classList.remove("hidden");
 }
 
-// ---------- MARK ATTENDANCE ----------
+// ---------------- MARK ATTENDANCE ----------------
 function markAttendance() {
   fetch(`${BACKEND_URL}/api/attendance/mark`, {
     method: "POST",
@@ -106,4 +122,4 @@ function markAttendance() {
   .catch(() => {
     attError.innerText = "Server error";
   });
-      }
+    }
