@@ -1,22 +1,27 @@
-const BACKEND_URL = "https://attendance-backend-5f7f.onrender.com"; // <-- CHANGE THIS
+console.log("App JS loaded");
 
-const studentId = localStorage.getItem("student_id");
+const BACKEND_URL = "    https://attendance-backend-5f7f.onrender.com"; // CHANGE IF NEEDED
 
-// UI elements
 const registerBox = document.getElementById("registerBox");
 const attendanceBox = document.getElementById("attendanceBox");
+const qrBox = document.getElementById("qrBox");
+
 const regError = document.getElementById("regError");
 const attError = document.getElementById("attError");
 const attSuccess = document.getElementById("attSuccess");
 
-// Decide screen on load
+let qrScanner = null;
+
+// ---------- INITIAL STATE ----------
+const studentId = localStorage.getItem("student_id");
+
 if (!studentId) {
   registerBox.classList.remove("hidden");
 } else {
   attendanceBox.classList.remove("hidden");
 }
 
-// -------- REGISTER STUDENT --------
+// ---------- REGISTER ----------
 function registerStudent() {
   regError.innerText = "";
 
@@ -52,11 +57,37 @@ function registerStudent() {
   });
 }
 
-// -------- MARK ATTENDANCE --------
-function markAttendance() {
+// ---------- QR SCANNER ----------
+function startScanner() {
   attError.innerText = "";
   attSuccess.innerText = "";
 
+  attendanceBox.classList.add("hidden");
+  qrBox.classList.remove("hidden");
+
+  qrScanner = new Html5Qrcode("qr-reader");
+
+  qrScanner.start(
+    { facingMode: "environment" },
+    { fps: 10, qrbox: 250 },
+    () => {
+      stopScanner();
+      markAttendance();
+    },
+    () => {}
+  );
+}
+
+function stopScanner() {
+  if (qrScanner) {
+    qrScanner.stop().then(() => qrScanner.clear());
+  }
+  qrBox.classList.add("hidden");
+  attendanceBox.classList.remove("hidden");
+}
+
+// ---------- MARK ATTENDANCE ----------
+function markAttendance() {
   fetch(`${BACKEND_URL}/api/attendance/mark`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -75,4 +106,4 @@ function markAttendance() {
   .catch(() => {
     attError.innerText = "Server error";
   });
-}
+      }
