@@ -5,16 +5,12 @@
   <title>College Attendance</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- PWA -->
-  <link rel="manifest" href="manifest.json">
-
-  <!-- CSS -->
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
   <div class="container">
-    <h2 id="title">College Attendance</h2>
+    <h2>College Attendance</h2>
 
     <!-- REGISTRATION -->
     <div id="registerBox" class="card hidden">
@@ -31,15 +27,24 @@
 
     <!-- ATTENDANCE -->
     <div id="attendanceBox" class="card hidden">
-      <p class="info">Click below to mark your attendance</p>
-      <button onclick="markAttendance()">Mark Attendance</button>
+      <p>Click below to scan QR and mark attendance</p>
+      <button onclick="startScanner()">Scan QR & Mark Attendance</button>
       <p class="success" id="attSuccess"></p>
       <p class="error" id="attError"></p>
     </div>
 
+    <!-- QR SCANNER -->
+    <div id="qrBox" class="card hidden">
+      <div id="qr-reader"></div>
+      <button onclick="stopScanner()">Cancel</button>
+    </div>
+
   </div>
 
-  <!-- JS -->
+  <!-- QR Scanner Library -->
+  <script src="https://unpkg.com/html5-qrcode"></script>
+
+  <!-- App JS -->
   <script src="js/app.js"></script>
 </body>
 </html>
