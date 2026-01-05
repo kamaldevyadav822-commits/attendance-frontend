@@ -1,4 +1,4 @@
-const BACKEND_URL = "https://YOUR-BACKEND-URL"; // <-- CHANGE THIS
+const BACKEND_URL = "https://attendance-backend-5f7f.onrender.com"; // <-- CHANGE THIS
 
 const studentId = localStorage.getItem("student_id");
 
