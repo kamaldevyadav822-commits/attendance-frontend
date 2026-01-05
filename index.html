@@ -5,6 +5,7 @@
   <title>College Attendance</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+  <!-- CSS -->
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -12,7 +13,7 @@
   <div class="container">
     <h2>College Attendance</h2>
 
-    <!-- REGISTRATION -->
+    <!-- ================= REGISTRATION ================= -->
     <div id="registerBox" class="card hidden">
       <input id="name" placeholder="Full Name">
       <input id="roll" placeholder="Roll No / College ID">
@@ -21,19 +22,30 @@
         <option value="SCM">SCM</option>
         <option value="EXIM">EXIM</option>
       </select>
+
       <button onclick="registerStudent()">Register</button>
       <p class="error" id="regError"></p>
     </div>
 
-    <!-- ATTENDANCE -->
+    <!-- ================= ATTENDANCE ================= -->
     <div id="attendanceBox" class="card hidden">
-      <p>Click below to scan QR and mark attendance</p>
+
+      <!-- STUDENT INFO -->
+      <div class="student-info">
+        <p class="label">Logged in as</p>
+        <p id="studentName" class="student-name"></p>
+        <p id="studentDept" class="student-dept"></p>
+      </div>
+
+      <p class="info">Scan the QR code shown by your teacher</p>
+
       <button onclick="startScanner()">Scan QR & Mark Attendance</button>
+
       <p class="success" id="attSuccess"></p>
       <p class="error" id="attError"></p>
     </div>
 
-    <!-- QR SCANNER -->
+    <!-- ================= QR SCANNER ================= -->
     <div id="qrBox" class="card hidden">
       <div id="qr-reader"></div>
       <button onclick="stopScanner()">Cancel</button>
@@ -44,7 +56,8 @@
   <!-- QR Scanner Library -->
   <script src="https://unpkg.com/html5-qrcode"></script>
 
-  <!-- App JS -->
+  <!-- App Logic -->
   <script src="js/app.js"></script>
+
 </body>
 </html>
